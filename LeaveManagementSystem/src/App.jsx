@@ -12,6 +12,11 @@ import SignUpPage from "./pages/SignUpPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import DashboardPage from "./pages/DashboardPage";
+import LeaveRequestPage from "./pages/LeaveRequestPage";
+import LeaveHistoryPage from "./pages/LeaveHistoryPage";
+import ManageLeaveRequests from "./pages/ManageLeaveRequests";
+import AdminLeaveHistory from "./pages/AdminLeaveHistory";
+import LoginPageOTP from "./pages/LoginPageOTP";
 
 // protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -33,7 +38,8 @@ const RedirectAuthenticatedUser = ({ children }) => {
 	const { isAuthenticated, user } = useAuthStore();
 
 	if (isAuthenticated && user?.isVerified) {
-		return <Navigate to='/' replace />;
+		return <Navigate to='/verify-email' />
+		// return <Navigate to='/' replace />;
 	}
 
 	return children;
@@ -49,20 +55,53 @@ function App() {
 	if (isCheckingAuth) return <LoadingSpinner />;
 
 	return (
-		<div
-			className='min-h-screen bg-gradient-to-br
-    from-gray-900 via-green-900 to-emerald-900 flex items-center justify-center relative overflow-hidden'
-		>
-			<FloatingShape color='bg-green-500' size='w-64 h-64' top='-5%' left='10%' delay={0} />
-			<FloatingShape color='bg-emerald-500' size='w-48 h-48' top='70%' left='80%' delay={5} />
-			<FloatingShape color='bg-lime-500' size='w-32 h-32' top='40%' left='-10%' delay={2} />
-
+		<div>
 			<Routes>
 				<Route
 					path='/'
 					element={
 						<ProtectedRoute>
 							<DashboardPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path='/otp'
+					element={
+						<ProtectedRoute>
+							<LoginPageOTP />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path='/leave-request'
+					element={
+						<ProtectedRoute>
+							<LeaveRequestPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path='/leave-history'
+					element={
+						<ProtectedRoute>
+							<LeaveHistoryPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path='/admin-leave-history'
+					element={
+						<ProtectedRoute>
+							<AdminLeaveHistory />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path='/manage-leaves'
+					element={
+						<ProtectedRoute>
+							<ManageLeaveRequests />
 						</ProtectedRoute>
 					}
 				/>

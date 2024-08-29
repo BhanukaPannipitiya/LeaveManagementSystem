@@ -35,7 +35,10 @@ const ResetPasswordPage = () => {
 	};
 
 	return (
-		<motion.div
+		<div className='min-h-screen bg-gradient-to-br
+		from-gray-900 via-green-900 to-emerald-900 flex items-center justify-center relative overflow-hidden'
+		>
+			<motion.div
 			initial={{ opacity: 0, y: 20 }}
 			animate={{ opacity: 1, y: 0 }}
 			transition={{ duration: 0.5 }}
@@ -79,6 +82,8 @@ const ResetPasswordPage = () => {
 				</form>
 			</div>
 		</motion.div>
+		</div>
+		
 	);
 };
 export default ResetPasswordPage;

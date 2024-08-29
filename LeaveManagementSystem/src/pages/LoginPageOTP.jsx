@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useAuthStore } from "../store/authStore";
 import toast from "react-hot-toast";
 
-const EmailVerificationPage = () => {
+const LoginPageOTP = () => {
 	const [code, setCode] = useState(["", "", "", "", "", ""]);
 	const inputRefs = useRef([]);
 	const navigate = useNavigate();
@@ -65,8 +65,8 @@ const EmailVerificationPage = () => {
 	return (
 		<div className='min-h-screen bg-gradient-to-br
 		from-gray-900 via-green-900 to-emerald-900 flex items-center justify-center relative overflow-hidden'
-			>
-		<motion.div
+		>
+			<motion.div
 				initial={{ opacity: 0, y: -50 }}
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.5 }}
@@ -107,4 +107,4 @@ const EmailVerificationPage = () => {
 		</div>
 	);
 };
-export default EmailVerificationPage;
+export default LoginPageOTP;

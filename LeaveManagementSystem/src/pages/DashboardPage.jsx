@@ -1,77 +1,155 @@
 import { motion } from "framer-motion";
 import { useAuthStore } from "../store/authStore";
-import { formatDate } from "../utils/date";
+import { Box, Paper, Typography, ButtonBase } from "@mui/material";
+import Header from "../components/Header";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
-	const { user, logout } = useAuthStore();
+    const { user, logout } = useAuthStore();
+    const navigate = useNavigate();
+    console.log("user", user);
 
-	const handleLogout = () => {
-		logout();
-	};
-	return (
-		<motion.div
-			initial={{ opacity: 0, scale: 0.9 }}
-			animate={{ opacity: 1, scale: 1 }}
-			exit={{ opacity: 0, scale: 0.9 }}
-			transition={{ duration: 0.5 }}
-			className='max-w-md w-full mx-auto mt-10 p-8 bg-gray-900 bg-opacity-80 backdrop-filter backdrop-blur-lg rounded-xl shadow-2xl border border-gray-800'
-		>
-			<h2 className='text-3xl font-bold mb-6 text-center bg-gradient-to-r from-green-400 to-emerald-600 text-transparent bg-clip-text'>
-				Dashboard
-			</h2>
+    const handleRequestLeave = () => {
+        navigate('/leave-request');
+    };
 
-			<div className='space-y-6'>
-				<motion.div
-					className='p-4 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700'
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.2 }}
-				>
-					<h3 className='text-xl font-semibold text-green-400 mb-3'>Profile Information</h3>
-					<p className='text-gray-300'>Name: {user.name}</p>
-					<p className='text-gray-300'>Email: {user.email}</p>
-				</motion.div>
-				<motion.div
-					className='p-4 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700'
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.4 }}
-				>
-					<h3 className='text-xl font-semibold text-green-400 mb-3'>Account Activity</h3>
-					<p className='text-gray-300'>
-						<span className='font-bold'>Joined: </span>
-						{new Date(user.createdAt).toLocaleDateString("en-US", {
-							year: "numeric",
-							month: "long",
-							day: "numeric",
-						})}
-					</p>
-					<p className='text-gray-300'>
-						<span className='font-bold'>Last Login: </span>
+    const handleLeaveHistory = () => {
+        navigate('/leave-history');
+    };
 
-						{formatDate(user.lastLogin)}
-					</p>
-				</motion.div>
-			</div>
+    const handleLeaveRequest = () => {
+        navigate('/manage-leaves');
+    };
 
-			<motion.div
-				initial={{ opacity: 0, y: 20 }}
-				animate={{ opacity: 1, y: 0 }}
-				transition={{ delay: 0.6 }}
-				className='mt-4'
-			>
-				<motion.button
-					whileHover={{ scale: 1.05 }}
-					whileTap={{ scale: 0.95 }}
-					onClick={handleLogout}
-					className='w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white 
-				font-bold rounded-lg shadow-lg hover:from-green-600 hover:to-emerald-700
-				 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 focus:ring-offset-gray-900'
-				>
-					Logout
-				</motion.button>
-			</motion.div>
-		</motion.div>
-	);
+    const handleAdminLeaveHistory = () => {
+        navigate('/admin-leave-history');
+    };
+
+    return (
+        <>
+            <div>
+            <Header />
+            </div>
+            <div
+                className='min-h-screen bg-gradient-to-br from-gray-900 via-green-900 to-emerald-900 flex flex-col items-center justify-center'
+                style={{ padding: '20px' }}
+            >
+                
+                <Typography variant="h4" align="center" sx={{ fontWeight: 'bold', color: '#fff', marginBottom: 4 }}>
+                    Welcome to Your Dashboard, {user.name}
+                </Typography>
+                <Typography variant="h6" align="center" sx={{ color: '#ddd', marginBottom: 8 }}>
+                    {new Date().getFullYear()} - Manage your leave requests and history
+                </Typography>
+                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 40 }}>
+                    {user.role === "user" ? (
+                        <>
+                            <Grid2>
+                                <ButtonBase onClick={handleRequestLeave} style={{ width: '100%' }}>
+                                    <Paper 
+                                        elevation={8} 
+                                        sx={{
+                                            padding: 6,
+                                            backgroundColor: '#ff7043',
+                                            color: '#fff',
+                                            width: 300,
+                                            height: 180,
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            '&:hover': {
+                                                backgroundColor: '#e64a19',
+                                                transform: 'scale(1.05)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                    >
+                                        <Typography variant="h5" align="center">Request Leave</Typography>
+                                    </Paper>
+                                </ButtonBase>
+                            </Grid2>
+                            <Grid2>
+                                <ButtonBase onClick={handleLeaveHistory} style={{ width: '100%' }}>
+                                    <Paper 
+                                        elevation={8} 
+                                        sx={{
+                                            padding: 6,
+                                            backgroundColor: '#42a5f5',
+                                            color: '#fff',
+                                            width: 300,
+                                            height: 180,
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            '&:hover': {
+                                                backgroundColor: '#1e88e5',
+                                                transform: 'scale(1.05)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                    >
+                                        <Typography variant="h5" align="center">Leave History</Typography>
+                                    </Paper>
+                                </ButtonBase>
+                            </Grid2>
+                        </>
+                    ) : (
+                        <>
+                            <Grid2>
+                                <ButtonBase onClick={handleLeaveRequest} style={{ width: '100%' }}>
+                                    <Paper 
+                                        elevation={8} 
+                                        sx={{
+                                            padding: 6,
+                                            backgroundColor: '#66bb6a',
+                                            color: '#fff',
+                                            width: 300,
+                                            height: 180,
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            '&:hover': {
+                                                backgroundColor: '#43a047',
+                                                transform: 'scale(1.05)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                    >
+                                        <Typography variant="h5" align="center">Manage Leave Requests</Typography>
+                                    </Paper>
+                                </ButtonBase>
+                            </Grid2>
+                            <Grid2>
+                                <ButtonBase onClick={handleAdminLeaveHistory} style={{ width: '100%' }}>
+                                    <Paper 
+                                        elevation={8} 
+                                        sx={{
+                                            padding: 6,
+                                            backgroundColor: '#ab47bc',
+                                            color: '#fff',
+                                            width: 300,
+                                            height: 180,
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            '&:hover': {
+                                                backgroundColor: '#8e24aa',
+                                                transform: 'scale(1.05)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                    >
+                                        <Typography variant="h5" align="center">Leave History</Typography>
+                                    </Paper>
+                                </ButtonBase>
+                            </Grid2>
+                        </>
+                    )}
+                </div>
+            </div>
+        </>
+    );
 };
+
 export default DashboardPage;
